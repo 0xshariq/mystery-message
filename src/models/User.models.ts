@@ -30,8 +30,8 @@ const UserSchema: Schema<User> = new Schema({
     verifyCodeExpires: { type: Date, required: true },
     isVerified: { type: Boolean, default: false },
     isAcceptingMessages: { type: Boolean, default: true, required: true },
-    messages: [{ type: Schema.Types.ObjectId, ref: 'Message' }]
+    messages: [MessageSchema]
 })
 
-export const UserModel = mongoose.model<User>('User', UserSchema);
-export default mongoose.model<Message>('Message', MessageSchema);
+export default UserModel = mongoose.model<User>('User', UserSchema) || (mongoose.models.User as mongoose.Model<User>);
+export const MessageModel = mongoose.model<Message>('Message', MessageSchema) || (mongoose.models.Message as mongoose.Model<Message>);
