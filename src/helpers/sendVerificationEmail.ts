@@ -1,2 +1,2 @@
-// import { resend } from "@/lib/resend";
+import { resend } from "@/lib/resend";
 
