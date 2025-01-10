@@ -7,6 +7,6 @@ export const usernameValidation = z
 
 export const signupSchema = z.object({
     username: usernameValidation,
-    email: z.string().email({ message: "Invalid email address" }),
+    email: z.string().email({ message: "Invalid email address" }).regex(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g),
     password: z.string().min(6, { message: "Password must be at least 6 characters long" }).regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm),
 })
