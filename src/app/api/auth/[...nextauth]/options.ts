@@ -13,10 +13,12 @@ export const authOptions: NextAuthOptions = {
                 email: { label: "Email", type: "text" },
                 password: { label: "Password", type: "password" }
             },
+            // Authorize function to validate user credentials
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async authorize(credentials: any): Promise<any> {
                 await dbConnect();
                 try {
+                    // Find user by email or username
                     const user = await UserModel.findOne({
                         $or: [
                             { email: credentials.email },
@@ -26,6 +28,7 @@ export const authOptions: NextAuthOptions = {
                     if (!user) throw new Error("User not found");
                     if (!user.isVerified) throw new Error("User not verified");
 
+                    // Compare provided password with stored hashed password
                     const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
                     if (!isPasswordCorrect) { throw new Error("Password incorrect"); }
                     else {
@@ -35,18 +38,21 @@ export const authOptions: NextAuthOptions = {
                 } catch (error: any) {
                     throw new Error(error);
                 }
-
             }
         })
     ],
+    // Custom sign-in page
     pages: {
         signIn: "/signIn"
     },
+    // Use JWT for session handling
     session: {
         strategy: "jwt"
     },
+    // Secret for JWT encryption
     secret: process.env.SECRET,
     callbacks: {
+        // Callback to customize session object
         async session({ session, token }) {
             if (token) {
                 session.user._id = token._id
@@ -56,6 +62,7 @@ export const authOptions: NextAuthOptions = {
             }
             return session
         },
+        // Callback to customize JWT token
         async jwt({ token, user }) {
             if (user) {
                 token._id = user._id?.toString()
@@ -67,3 +74,4 @@ export const authOptions: NextAuthOptions = {
         }
     }
 }
+
