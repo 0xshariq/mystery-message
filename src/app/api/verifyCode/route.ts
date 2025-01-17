@@ -1,4 +1,4 @@
-import dbConnect from '@/lib/dbConnect';
+import { dbConnect, dbDisconnect } from "@/lib/dbConnect";
 import UserModel from '@/models/User.models';
 import { z } from 'zod';
 
@@ -59,6 +59,9 @@ export async function POST(request: Request) {
     }
 
     return Response.json({ success: false, message: "Error in verifying user" }, { status: 500 });
+  } finally {
+    // Always disconnect from the database
+    await dbDisconnect();
   }
 }
 

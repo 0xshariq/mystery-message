@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
-import dbConnect from "@/lib/dbConnect";
+import {dbConnect, dbDisconnect}from "@/lib/dbConnect";
 import { User } from "next-auth";
 import UserModel from "@/models/User.models";
 import mongoose from "mongoose";
@@ -64,6 +64,9 @@ export async function GET(request: Request) {
             success: false, 
             error: "Error in Fetching User Messages" 
         }, { status: 500 });
-    }
+    } finally {
+        // Always disconnect from the database
+        await dbDisconnect();
+      }
 }
 

@@ -1,5 +1,5 @@
 // Import necessary modules and models
-import dbConnect from "@/lib/dbConnect";
+import { dbConnect, dbDisconnect } from "@/lib/dbConnect";
 import UserModel from "@/models/User.models";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
@@ -14,7 +14,7 @@ export async function POST(request: Request, response: Response) {
     try {
         // Extract user registration data (username, email, password) from the request body
         const { username, email, password } = await request.json();
-        
+
         // Check if a verified user with the same username already exists in the database
         const existingUserVerifiedByUsername = await UserModel.findOne({
             username: username,
@@ -27,7 +27,7 @@ export async function POST(request: Request, response: Response) {
 
         // Generate a 6-digit verification code for email verification
         const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
-        
+
         // Check if a user with the same email already exists in the database
         const existingUserByEmail = await UserModel.findOne({
             email: email,
@@ -77,6 +77,9 @@ export async function POST(request: Request, response: Response) {
         // If any error occurs during the process, log it and return an error response
         console.error("Error registering user", error);
         return Response.json({ success: false, error: "Error registering user" }, { status: 500 });
+    } finally {
+        // Always disconnect from the database
+        await dbDisconnect();
     }
 }
 

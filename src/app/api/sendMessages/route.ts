@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/dbConnect";
+import {dbConnect ,dbDisconnect } from "@/lib/dbConnect";
 import UserModel, { Message } from "@/models/User.models";
 import { z } from "zod";
 
@@ -70,6 +70,9 @@ export async function POST(request: Request) {
       { success: false, message: "Error in sending message" },
       { status: 500 }
     );
+  } finally {
+    // Always disconnect from the database
+    await dbDisconnect();
   }
 }
 

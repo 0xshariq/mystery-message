@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import dbConnect from "@/lib/dbConnect";
+import { dbConnect, dbDisconnect } from "@/lib/dbConnect";
 import UserModel from "@/models/User.models";
 
 export const authOptions: NextAuthOptions = {
@@ -37,6 +37,9 @@ export const authOptions: NextAuthOptions = {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (error: any) {
                     throw new Error(error);
+                } finally {
+                    // Always disconnect from the database
+                    await dbDisconnect();
                 }
             }
         })
