@@ -1,4 +1,4 @@
-import {dbConnect ,dbDisconnect } from "@/lib/dbConnect";
+import { dbConnect, dbDisconnect } from "@/lib/dbConnect";
 import UserModel, { Message } from "@/models/User.models";
 import { z } from "zod";
 

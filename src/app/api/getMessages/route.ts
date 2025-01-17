@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
-import {dbConnect, dbDisconnect}from "@/lib/dbConnect";
+import { dbConnect, dbDisconnect } from "@/lib/dbConnect";
 import { User } from "next-auth";
 import UserModel from "@/models/User.models";
 import mongoose from "mongoose";
@@ -50,9 +50,9 @@ export async function GET(request: Request) {
         }
 
         // Return success response with user messages
-        return Response.json({ 
-            success: true, 
-            messages: userWithMessages[0].messages 
+        return Response.json({
+            success: true,
+            messages: userWithMessages[0].messages
         }, { status: 200 });
 
     } catch (error) {
@@ -60,13 +60,13 @@ export async function GET(request: Request) {
         console.error("Error in Fetching User Messages", error);
 
         // Return error response
-        return Response.json({ 
-            success: false, 
-            error: "Error in Fetching User Messages" 
+        return Response.json({
+            success: false,
+            error: "Error in Fetching User Messages"
         }, { status: 500 });
     } finally {
         // Always disconnect from the database
         await dbDisconnect();
-      }
+    }
 }
 
