@@ -54,7 +54,7 @@ export async function GET(request: Request) {
     // If no verified user with this username exists, it's available
     return NextResponse.json({ 
       success: true, 
-      message: "Username is available" 
+      message: "Username is unique and available" 
     }, { status: 200 });
 
   } catch (error) {
