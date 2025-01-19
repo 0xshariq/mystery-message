@@ -5,9 +5,7 @@ import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 
 // Define the POST request handler for user registration
-// The eslint-disable comment is used to suppress the unused 'response' parameter warning
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function POST(request: Request, response: Response) {
+export async function POST(request: Request) {
     // Establish a connection to the database
     await dbConnect();
 
