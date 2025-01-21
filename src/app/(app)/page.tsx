@@ -43,7 +43,7 @@ export default function DashboardHome() {
         </Carousel>
       </div>
     </main>
-    <footer>
+    <footer className="mb-0">
         <div className="bg-gray-800 text-white p-4 text-center">
             <p className="text-sm">
             &copy; 2025 Mystery Message. All Rights Reserved.

@@ -12,12 +12,18 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 const VerifyAccount = () => {
   const router = useRouter();
@@ -64,12 +70,30 @@ const VerifyAccount = () => {
               name="verifyCode"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Verification Code</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your code" type="number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+              <FormLabel>One-Time Password</FormLabel>
+              <FormControl>
+                <InputOTP maxLength={6} {...field}>
+                  <InputOTPGroup>
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                    </InputOTPGroup>
+                    <InputOTPSeparator/> 
+                    <InputOTPGroup>
+                    <InputOTPSlot index={2} />
+                    <InputOTPSlot index={3} />
+                    </InputOTPGroup>
+                    <InputOTPSeparator/>
+                    <InputOTPGroup>
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                  </InputOTPGroup>
+                </InputOTP>
+              </FormControl>
+              <FormDescription>
+                Please enter the one-time password sent to your phone.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
               )}
             />
             <Button type="submit">Submit</Button>
