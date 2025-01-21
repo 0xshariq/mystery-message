@@ -33,29 +33,29 @@ const Dashboard = () => {
   const { register, watch, setValue } = form;
   const acceptMessages = watch("acceptMessages");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleAcceptMessage = async (messageId: string) => {
-    setIsSwitchLoading(true);
-    try {
-      const response = await axios.get<ApiResponse>(`/api/acceptMessages`);
-      setValue("acceptMessages", response.data.isAcceptingMessages);
-      toast({
-        title: "Message accepted",
-        description: "The message has been accepted",
-      });
-    } catch (error) {
-      const axiosError = error as AxiosError<ApiResponse>;
-      toast({
-        title: "Error",
-        description:
-          axiosError.response?.data.error || "Failed to accept message",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSwitchLoading(false);
-    }
-  };
+  const handleAcceptMessage = React.useCallback(async (messageId: string) => {
+      setIsSwitchLoading(true);
+      try {
+        const response = await axios.get<ApiResponse>(`/api/acceptMessages`);
+        setValue("acceptMessages", response.data.isAcceptingMessages);
+        toast({
+          title: "Message accepted",
+          description: "The message has been accepted",
+        });
+      } catch (error) {
+        const axiosError = error as AxiosError<ApiResponse>;
+        toast({
+          title: "Error",
+          description:
+            axiosError.response?.data.error || "Failed to accept message",
+          variant: "destructive",
+        });
+      } finally {
+        setIsSwitchLoading(false);
+      }
+    }, [setValue, toast]);
 
-  const fetchMessages = async (refresh: boolean) => {
+  const fetchMessages = React.useCallback(async (refresh: boolean) => {
     setIsLoading(true);
     setIsSwitchLoading(false);
     try {
@@ -79,7 +79,7 @@ const Dashboard = () => {
       setIsLoading(false);
       setIsSwitchLoading(false);
     }
-  };
+  }, [toast]);
 
   useEffect(() => {
     if (!session || !session.user) {
@@ -89,7 +89,7 @@ const Dashboard = () => {
     if (messages.length > 0 && typeof messages[0]._id === "string") {
       handleAcceptMessage(messages[0]._id);
     }
-  }, [session, setValue, fetchMessages, handleAcceptMessage]);
+  }, [session, setValue, fetchMessages, handleAcceptMessage, messages]);
 
   const handleSwitchChange = async () => {
     try {

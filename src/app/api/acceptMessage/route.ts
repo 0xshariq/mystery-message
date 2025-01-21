@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
-import dbConnect from "@/lib/dbConnect";
+import {dbConnect,dbDisconnect} from "@/lib/dbConnect";
 import { User } from "next-auth";
 import UserModel from "@/models/User.models";
 
@@ -50,6 +50,9 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error("Error in Accepting Message", error);
         return Response.json({ success: false, error: "Error in Accepting Message" }, { status: 500 });
+    } finally {
+        // Disconnect from the database
+        await dbDisconnect();
     }
 }
 
@@ -92,6 +95,9 @@ export async function GET(request: Request) {
     } catch (error) {
         console.error("Error in Fetching User", error);
         return Response.json({ success: false, error: "Error in Fetching User" }, { status: 500 });
+    } finally {
+        // Disconnect from the database
+        await dbDisconnect();
     }
 }
 
