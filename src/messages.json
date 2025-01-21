@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Message from User123",
+    "content": "Hello, I am User123. I am interested in your product. Can you provide me with more information?",
+    "received": "10 minutes ago"
+  },
+  {
+    "title": "Message from User456",
+    "content": "Hi, I am User456. I would like to know more about your services. Can you help me?",
+    "received": "1 hour ago"
+  },
+  {
+    "title": "Message from User789",
+    "content": "Hello, I am User789. I am interested in your product. Can you provide me with more information?",
+    "received": "2 hours ago"
+  }
+]
