@@ -15,6 +15,8 @@ interface VerificationEmailProps {
   otp: string;
 }
 
+const baseUrl = `${window.location.protocol}//${window.location.host}`;
+
 export const VerficationEmail = ({ username, otp }: VerificationEmailProps) => (
   <Html>
     <Head />
@@ -34,7 +36,7 @@ export const VerficationEmail = ({ username, otp }: VerificationEmailProps) => (
         <Section style={buttonContainer}>
           <Button
             style={button}
-            href="https://yourplatform.com/verify"
+            href={`${baseUrl}/verify/${username}`}
           >
             Verify Account
           </Button>
